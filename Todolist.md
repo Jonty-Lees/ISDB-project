@@ -20,6 +20,16 @@ Keep commiting changes to Github
     8. create revelent folders, and files
             model, route etc.
 
+
+    - create authentication
+        - build user schema
+        - impliment rest
+
+
+    - import information
+
+    - create routes
+
   
 
  -->
