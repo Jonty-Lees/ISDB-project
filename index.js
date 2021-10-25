@@ -9,6 +9,9 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const app = express()
 const port = 3000;
 
+// import the middleware
+require('./middleware/auth');
+
 
 // connect up mongoose
 mongoose.connect("mongod://127.0.0.1/isdb_auth");
