@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const jwt = requre('jsonwebtoken');
 const mongoose = require('mongoose');
 
@@ -10,7 +10,21 @@ const app = express()
 const port = 3000;
 
 
+// connect up mongoose
+mongoose.connect("mongod://127.0.0.1/isdb_auth");
 
+// const app.use
+app.use(express.json());
+app.use(passport.initialize());
+app.use(express.urlencoded({ extended: true }));
+
+// utilise router
+app.use("/api", authRoute);
+app.use("/api", albumsRoute)
+
+// add the swagger UI
+
+// test with app.get secret
 
 
 
@@ -23,6 +37,6 @@ const port = 3000;
 // })
 
 
-app.listen(path, ()=>{
+app.listen(path, () => {
     console.log(`You are listening on port: ${port}`)
 })
