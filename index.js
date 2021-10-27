@@ -39,6 +39,11 @@ app.get("/secret", passport.authenticate("jwt", { session: false }), function (r
   });
 });
 
+app.get("/tv", passport.authenticate("jwt", {session: false}), function (req,res){
+  res.json({
+    message: "this is another area you are only allowed into if you have the right authorization!"});
+})
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
