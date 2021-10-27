@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const {User} = require('../modules/userSchema')
 
-const jwtOptions = { secretOrKey: "aSecret"};
+const jwtOptions = { secretOrKey: "pa657HI!sna87"};
 
 
 

@@ -8,7 +8,7 @@ let JwtStrategy = passportJWT.Strategy;
 // move block to middleware
 let jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJWT.fromAuthHeaderWithScheme("jwt");
-jwtOptions.secretOrKey = "aSecret";
+jwtOptions.secretOrKey = "pa657HI!sna87";
 
 // move block to middleware
 let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
