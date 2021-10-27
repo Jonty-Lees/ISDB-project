@@ -8,7 +8,7 @@ let trackSchema = new mongoose.Schema({
         type: String,
         unique: false
     },
-    GenreId:  {
+    GenreId: {
         type: Number,
         unique: false
     },
@@ -19,4 +19,6 @@ let trackSchema = new mongoose.Schema({
 
 })
 
-module.export = trackSchema;
+const Track = mongoose.model('Track', trackSchema)
+
+module.export = { Track };

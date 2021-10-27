@@ -1,6 +1,8 @@
 const express = require('express');
 const musicRouter = express.Router();
 
+const { Track } = require('../modules/trackSchema')
+
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
 
