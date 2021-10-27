@@ -1,45 +1,45 @@
-const express = require('express');
-const jwt = requre('jsonwebtoken');
-const mongoose = require('mongoose');
+const express = require("express");
+const passport = require("passport");
+const mongoose = require("mongoose");
 
-const passport = require('passport');
-const passportJWT = require("passport-jwt");
-const passportLocalMongoose = require("passport-local-mongoose");
+// import auth middleware
+require("./middleware/auth");
 
-const app = express()
-const port = 3000;
-
-// import the middleware
-require('./middleware/auth');
+// import router(s)
+const authRoute = require("./routes/auth");
 
 
-// connect up mongoose
-mongoose.connect("mongod://127.0.0.1/isdb_auth");
 
-// const app.use
+
+
+
+
+// // NEW 
+// const swaggerUi = require("swagger-ui-express");
+// // new
+// const swaggerDocument = require("./routes/swagger.json");
+
+mongoose.connect("mongodb://127.0.0.1/ISDB_auth");
+
+const app = express();
 app.use(express.json());
 app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
 
-// utilise router
+// utilise router(s)
 app.use("/api", authRoute);
-app.use("/api", albumsRoute)
 
-// add the swagger UI
-
-// test with app.get secret
+// //NEW 
+// app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
+app.get("/secret", passport.authenticate("jwt", { session: false }), function (req,res) {
+  res.json({
+    message: "You have access to a secret zone"
+  });
+});
 
-
-
-
-
-// app.get('/', function (req, res){
-//     res.send("HELLO WORLD!")
-// })
-
-
-app.listen(path, () => {
-    console.log(`You are listening on port: ${port}`)
-})
+const port = 3000;
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
