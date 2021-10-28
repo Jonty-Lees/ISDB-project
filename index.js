@@ -1,6 +1,6 @@
 const express = require("express");
-const passport = require("passport");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 // import auth middleware
 require("./middleware/auth");
@@ -10,18 +10,8 @@ const authRoute = require("./routes/auth");
 const musicRoute = require("./routes/music")
 
 
-
-
-
-
-
-// // NEW 
-// const swaggerUi = require("swagger-ui-express");
-// // new
-// const swaggerDocument = require("./routes/swagger.json");
-
 mongoose.connect("mongodb://127.0.0.1/ISDB_auth");
-mongoose.connect("mongodb://127.0.0.1/ISDB_db");
+// mongoose.connect("mongodb://127.0.0.1/ISDB_db");
 
 const app = express();
 app.use(express.json());
@@ -32,20 +22,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", authRoute);
 app.use("/api", musicRoute);
 
-// //NEW 
-// app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-app.get("/secret", passport.authenticate("jwt", { session: false }), function (req,res) {
+app.get("/secret", passport.authenticate("jwt", { session: false }), function (req, res) {
   res.json({
     message: "You have access to a secret zone"
   });
 });
 
-app.get("/tv", passport.authenticate("jwt", {session: false}), function (req,res){
-  res.json({
-    message: "this is another area you are only allowed into if you have the right authorization!"});
-})
+app.get("/tracks/:id", passport.authenticate
+  ("jwt", { session: false }),
+  async function (req, res) {
+    const track = await Track.findOne({ _id: req.params.id });
+    return res.json(track);
+  })
 
 const port = 3000;
 app.listen(port, () => {
