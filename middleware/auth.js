@@ -1,6 +1,6 @@
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
-const { User } = require("../modules/userSchema");
+const { User } = require("../model/userSchema");
 // move block to middleware
 let ExtractJWT = passportJWT.ExtractJwt;
 let JwtStrategy = passportJWT.Strategy;

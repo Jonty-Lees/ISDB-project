@@ -9,9 +9,7 @@ require("./middleware/auth");
 const authRoute = require("./routes/auth");
 const musicRoute = require("./routes/music")
 
-
-mongoose.connect("mongodb://127.0.0.1/ISDB_auth");
-// mongoose.connect("mongodb://127.0.0.1/ISDB_db");
+mongoose.connect("mongodb://127.0.0.1/ISDB_db");
 
 const app = express();
 app.use(express.json());
@@ -23,18 +21,10 @@ app.use("/api", authRoute);
 app.use("/api", musicRoute);
 
 
-app.get("/secret", passport.authenticate("jwt", { session: false }), function (req, res) {
+app.get("/passwordISDB", passport.authenticate("jwt", {session: false}), function (req,res){
   res.json({
-    message: "You have access to a secret zone"
-  });
-});
-
-app.get("/tracks/:id", passport.authenticate
-  ("jwt", { session: false }),
-  async function (req, res) {
-    const track = await Track.findOne({ _id: req.params.id });
-    return res.json(track);
-  })
+    message: "this is another area you are only allowed into if you have the right authorization!"});
+})
 
 const port = 3000;
 app.listen(port, () => {

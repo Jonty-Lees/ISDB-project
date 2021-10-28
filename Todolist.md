@@ -34,6 +34,7 @@ Keep commiting changes to Github
 
     1. With the csv files all containing different information, i have imported them as seperate collections. im not 100% sure how to direct different routes to specific collections
             is it to do with creating mongo clusters?
+            should it all be merged into one db collection?
 
     2. am i able to search multiple collection? I have been trying whether sperating in multiple collections or having it all within one is the best option?
 
