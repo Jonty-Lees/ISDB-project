@@ -6,7 +6,16 @@ const { Track } = require('../modules/trackSchema')
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
 
+musicRouter.get('/tracks/:id', passport.authenticate("jwt", 
+                { session: false }), 
+                async function (req, res){   
+                        const track = await Track.findOne({_id:req.params.id});
+                        return res.json(track);
 
+                });
+
+
+            
 
 
 //  /genres   GET   all genres(as an array)
@@ -16,6 +25,13 @@ const { Track } = require('../modules/trackSchema')
 
 // albums/:id   GET   All info about the specific album, including artist info
 
+musicRouter.get('/albums/:id', passport.authenticate("jwt", 
+                { session: false }), 
+                async function (req, res){   
+                        const track = await Track.findOne({_id:req.params.id});
+                        return res.json(track);
+
+                });
 
 
 

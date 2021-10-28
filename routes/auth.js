@@ -1,24 +1,30 @@
+// add consts require
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken')
 
+// import User
+
 const {User} = require('../modules/userSchema')
+
+// add the jwtOptions with secret or key password
 
 const jwtOptions = { secretOrKey: "pa657HI!sna87"};
 
 
+// /register - this is to add a new user
 
 
 router.post('/register', (req, res) => {
     if (req.body.username && req.body.password) {
-        // check if user exists
+        // check if user exists, they do search 
         User.findOne({ username: req.body.username },
             function (err, user) {
                 if (err) {
                     // send error back
                     res.status(401).json(err);
                 } else if (!user) {
-                    // create user... note that we are not including the password
+                    // create user but do not add the password
                     let newUser = new User({ username: req.body.username });
                     User.register(
                         newUser,
@@ -27,29 +33,34 @@ router.post('/register', (req, res) => {
                             if (err) {
                                 res.status(401).json(err);
                             } else {
-                                // no error in registering user
+                                // if no error show message
                                 res.status(201).json({
-                                    message: 'registration successful'
+                                    message: 'Registration Successful!!'
                                 });
                             }
                         }
                     )
                 } else {
                     res.status(401).json({
-                        message: "A user exists with this username"
+                        message: "A User already exists with this username"
                     });
                 }
             });
 
     } else {
         res.status(401).json({
-            message: "username and password required"
+            message: "Please enter username and password"
         })
     }
 });
 
+
+// Create a POST '/login', 
+
 router.post('/login', (req, res) => {
     if (req.body.username && req.body.password) {
+        // check to see if user exists
+        //  create const for username and password
         const username = req.body.username;
         const password = req.body.password;
         User.findOne({ username: username },
@@ -75,7 +86,7 @@ router.post('/login', (req, res) => {
                             const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
                             res.status(200).json({
-                                message: "login successful",
+                                message: "Login Successful!!",
                                 token: token
                             });
                         } else {
@@ -88,7 +99,7 @@ router.post('/login', (req, res) => {
             });
     } else {
         res.status(401).json({
-            message: "missing username or password"
+            message: "Incorrect username or password"
         });
     }
 });
