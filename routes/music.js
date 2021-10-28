@@ -10,9 +10,8 @@ const { Tracks } = require('../model/tracksSchema')
 router.get('/tracks/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const track = await Tracks.findOne({ _id: req.params.id },{Name:1, AlbumId:1});
-        return res.json(track);
-
+        const track = await Tracks.findOne({ _id: req.params.id })
+        return (res.json(track), Albums.findOne({AlbumId: 'track.AlbumId'}))
     });
 
 
