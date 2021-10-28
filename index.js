@@ -7,6 +7,7 @@ require("./middleware/auth");
 
 // import router(s)
 const authRoute = require("./routes/auth");
+const musicRoute = require("./routes/music")
 
 
 
@@ -20,6 +21,7 @@ const authRoute = require("./routes/auth");
 // const swaggerDocument = require("./routes/swagger.json");
 
 mongoose.connect("mongodb://127.0.0.1/ISDB_auth");
+mongoose.connect("mongodb://127.0.0.1/ISDB_db");
 
 const app = express();
 app.use(express.json());
@@ -28,6 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // utilise router(s)
 app.use("/api", authRoute);
+app.use("/api", musicRoute);
 
 // //NEW 
 // app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
