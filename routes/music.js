@@ -5,27 +5,42 @@ const passport = require('passport')
 const { Tracks } = require('../model/tracksSchema')
 const { Genres } = require('../model/genresSchema')
 const { Albums } = require('../model/albumSchema')
-const { Artists } = require('../model/artistSchema')
+const { Artists } = require('../model/artistSchema');
 
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
 
+
+
 router.get('/tracks/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const track = await Tracks.findOne({ TrackId: req.params.id }
-        [{
+        const track = await Tracks.aggregate([
+            {
+                $match:
+                    { TrackId: req.params.id }
+            },
+            {
                 $lookup: {
-                    from: Albums,
-                    localField: Tracks.AlbumId,
-                    foreignField: Albums.AlbumId,
-                    as: "albumInfo",
+                    from: "Albums",
+                    localField: "Tracks.AlbumId",
+                    foreignField: "Albums.AlbumId",
+                    as: "Album"
+                }
+            },
+            {
+                $lookup: {
+                    from: "Genres",
+                    localField: "Tracks.GenreId",
+                    foreignField: "Genres.GenreId",
+                    as: "Genre"
                 }
             }])
         return res.json(track)
     });
 
-
+// Working!
+//    db.tracks.aggregate([ {$match: {TrackId: 4}}, {   $lookup: {from:"albums", localField:"AlbumId", foreignField:"AlbumId", as: "Album"} }, { $lookup: {from:"genres", localField: "GenreId", foreignField: "GenreId", as: "Genre" }} ] )
 
 
 
@@ -58,7 +73,7 @@ router.get('/genres',
 router.get('/albums/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const album = await Albums.find({ _id: req.params.id })
+        const album = await Albums.findOne({ _id: req.params.id })
         return res.json(album)
     });
 
@@ -66,7 +81,13 @@ router.get('/albums/:id', passport.authenticate("jwt",
 
 // /artists/:id    GET    All info about the specific artist
 
-
+router.get('/artists/:id', passport.authenticate("jwt",
+    { session: false }),
+    async function (req, res) {
+        const artist = await Artists.find({ ArtistId: req.params.id })
+        return res.json(artist)
+    }
+)
 
 
 //  /tracks    POST     yorsu can add Name, album id, Genre id, composer, furation, size in byte and prices.  
