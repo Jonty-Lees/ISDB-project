@@ -4,7 +4,7 @@ const passport = require('passport')
 
 const { Tracks } = require('../model/tracksSchema')
 const { Genres } = require('../model/genresSchema')
-const { Albums } = require ('../model/albumSchema')
+const { Albums } = require('../model/albumSchema')
 
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
@@ -12,7 +12,15 @@ const { Albums } = require ('../model/albumSchema')
 router.get('/tracks/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const track = await Tracks.findOne({ _id: req.params.id })
+        const track = await Tracks.findOne({ TrackId: req.params.id }
+        [{
+                $lookup: {
+                    from: Albums,
+                    localField: Tracks.AlbumId,
+                    foreignField: Albums.AlbumId,
+                    as: "albumInfo",
+                }
+            }])
         return res.json(track)
     });
 
@@ -22,12 +30,24 @@ router.get('/tracks/:id', passport.authenticate("jwt",
 
 //  /genres   GET   all genres(as an array)
 
-// router.get('/genres', passport.authenticate("jwt",
-//     { sessions: false }),
-//     async function (req, res) {
-//             const genres = await Genres.find().toArray()
-//             return res.json(genres)
-//     })
+router.get('/genres',
+    passport.authenticate("jwt",
+        { session: false }),
+    async function (req, res) {
+        const genres = await Genres.aggregate(
+            [{
+                $project:
+                {
+                    _id: 0,
+                    Name: 1,
+                    GenreId: 1
+                }
+            }
+            ]).sort(
+                { GenreId: 1 }
+            )
+        return res.json(genres)
+    })
 
 
 
