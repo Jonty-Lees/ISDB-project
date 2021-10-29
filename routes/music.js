@@ -5,6 +5,7 @@ const passport = require('passport')
 const { Tracks } = require('../model/tracksSchema')
 const { Genres } = require('../model/genresSchema')
 const { Albums } = require('../model/albumSchema')
+const { Artists } = require('../model/artistSchema')
 
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
