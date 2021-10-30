@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const artistSchema = new mongoose.Schema({
+    _id: String,
     Name: String,
     ArtistId: Number
 })

@@ -84,7 +84,7 @@ router.get('/albums/:id', passport.authenticate("jwt",
 router.get('/artists/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const artist = await Artists.find({ ArtistId: req.params.id })
+        const artist = await Artists.find({ _id: req.params.id })
         return res.json(artist)
     }
 )

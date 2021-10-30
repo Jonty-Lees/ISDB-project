@@ -1,12 +1,19 @@
 const mongoose = require('mongoose');
 
 const trackSchema = new mongoose.Schema({
+    _id: String,
     Name: String,
-    AlbumId: Number,
+    AlbumId: {
+        type: Number,
+        unique: false
+    },
     TrackId: Number,
     MediaTypeId: Number,
-    GenreId: Number,
-    Composer:String,
+    GenreId: {
+        type: Number,
+        unique: false
+    },
+    Composer: String,
     Milliseconds: Number,
     Bytes: Number,
     UnitPrice: Number
