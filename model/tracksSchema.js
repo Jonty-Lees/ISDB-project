@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const trackSchema = new mongoose.Schema({
-    _id: String,
     Name: String,
     AlbumId: {
         type: Number,

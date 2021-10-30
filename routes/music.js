@@ -95,7 +95,32 @@ router.get('/artists/:id', passport.authenticate("jwt",
 
 
 
+router.post('/tracks', async function(req, res){
+    const track = new Tracks({
+        Name: req.body.Name,
+        AlbumId: req.body.AlbumId,
+        GenreId: req.body.GenreId,
+        Composer: req.body.Composer,
+        Milliseconds: req.body.Milliseconds,
+        Bytes: req.body.Bytes,
+        UnitPrice: req.body.UnitPrice
+    })
+    await track.save()
+    res.status(201).send(track)
+})
 
+
+// router.post('/student', async function (req, res) {
+//     // create new data
+//     const student = new Student({
+//         username: req.body.username,
+//         class: req.body.class,
+//         rollnumber: req.body.rollnumber
+//     })
+//     // how we save the data
+//     await student.save()
+//     res.send(student)
+// })
 
 
 
