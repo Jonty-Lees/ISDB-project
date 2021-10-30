@@ -4,13 +4,11 @@ const trackSchema = new mongoose.Schema({
     Name: String,
     AlbumId: {
         type: Number,
-        unique: false
     },
     TrackId: Number,
     MediaTypeId: Number,
     GenreId: {
-        type: Number,
-        unique: false
+        type: Number
     },
     Composer: String,
     Milliseconds: Number,
