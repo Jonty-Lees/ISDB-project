@@ -20,7 +20,7 @@ router.get('/tracks/:id', passport.authenticate("jwt",
         const track = await Tracks.aggregate([
             {
                 $match: {
-                    "TrackId": parseInt(req.params.id, 10)
+                    "TrackId": parseInt(req.params.id)
                 }
             },
             {
@@ -99,46 +99,28 @@ router.get('/artists/:id', passport.authenticate("jwt",
 // Json message with created record or proper error message. Album and Genre have to exist already
 
 
+router.post('/tracks', async function (req, res) {
+    const track = new Tracks({
+        Name: req.body.Name,
+        AlbumId: req.body.AlbumId,
+        GenreId: req.body.GenreId,
+        Composer: req.body.Composer,
+        Milliseconds: req.body.Milliseconds,
+        Bytes: req.body.Bytes,
+        UnitPrice: req.body.UnitPrice
+    })
+    try {
+        await track.save()
+        res.status(201).json({
+            message: `The track '${req.body.Name}' has been succesfully added`,
+            track
+        })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+});
 
-// router.post('/tracks', async function (req, res) {
-//     // check if the genre and Alumid already exist
-//     // if so they can create track
-
-//     // if not send error
-//     const genre = req.body.genre;
-//     const albumId = req.body.albumId
-
-
-
-// })
-// try {
-//     await track.save()
-//     res.status(201).send(track)
-// } catch (err) {
-//     res.status(400).json({ message: err.message })
-// }
-// });
 
 
 
 module.exports = router;
-
-
-
-// router.post('/tracks', async function (req, res) {
-//     const track = new Tracks({
-//         Name: req.body.Name,
-//         AlbumId: req.body.AlbumId,
-//         GenreId: req.body.GenreId,
-//         Composer: req.body.Composer,
-//         Milliseconds: req.body.Milliseconds,
-//         Bytes: req.body.Bytes,
-//         UnitPrice: req.body.UnitPrice
-//     })
-//     try {
-//         await track.save()
-//         res.status(201).send(track)
-//     } catch (err) {
-//         res.status(400).json({ message: err.message })
-//     }
-// });
