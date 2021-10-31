@@ -35,7 +35,7 @@ router.post('/register', (req, res) => {
                             } else {
                                 // if no error show message
                                 res.status(201).json({
-                                    message: 'Registration Successful!!'
+                                    message: 'Registration Successful!! Enjoy ISDB'
                                 });
                             }
                         }
