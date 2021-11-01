@@ -102,7 +102,7 @@ router.get('/albums/:id', passport.authenticate("jwt",
             },
             {
                 $lookup: {
-                    from: "tracks",
+                    from: "Tracks",
                     localField: "AlbumId",
                     foreignField: "AlbumId",
                     as: "tracks"

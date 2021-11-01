@@ -272,15 +272,17 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": [{
-                                    "Name": "string",
-                                    "AlbumId": "number",
-                                    "GenreId": "number",
-                                    "Composer": "string",
-                                    "Milliseconds": "number",
-                                    "Bytes": "number",
-                                    "UnitPrice": "number"
-                                }],
+                                "properties": [
+                                    {
+                                        "Name": "string",
+                                        "AlbumId": "number",
+                                        "GenreId": "number",
+                                        "Composer": "string",
+                                        "Milliseconds": "number",
+                                        "Bytes": "number",
+                                        "UnitPrice": "number"
+                                    }
+                                ],
                                 "required": [
                                     "Name",
                                     "AlbumId",
@@ -294,13 +296,13 @@
                             "examples": {
                                 "Create new student example": {
                                     "value": {
-                                            "Name" : "You Know My Name",
-                                            "AlbumId" : "110",
-                                            "GenreId" : "14",
-                                              "Composer" : "K. Petterson",
-                                            "Milliseconds" : "120234e64",
-                                            "Bytes" : "12563463423",
-                                            "UnitPrice" : "0.99"                                          
+                                        "Name": "You Know My Name",
+                                        "AlbumId": "110",
+                                        "GenreId": "14",
+                                        "Composer": "K. Petterson",
+                                        "Milliseconds": "120234e64",
+                                        "Bytes": "12563463423",
+                                        "UnitPrice": "0.99"
                                     }
                                 }
                             }
@@ -430,6 +432,152 @@
                 "description": "Get specific track details",
                 "tags": [
                     "Tracks"
+                ]
+            }
+        },
+        "/genres": {
+            "get": {
+                "summary": "Get array of genres",
+                "operationId": "get-genres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "GenreId": "String",
+                                                "Name": "String"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "examples": {
+                                    "Result Array": {
+                                        "value": [
+                                            {
+                                                "GenreId": 14,
+                                                "Name": "R&B/Soul"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get an Array of all the Genres",
+                "tags": [
+                    "Genres"
+                ]
+            }
+        },
+        "/albums/:id": {
+            "get": {
+                "summary": "Get specific album information, including artist and tracks",
+                "operationId": "get-albums",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "_id": "String",
+                                            "AlbumId": "Number",
+                                            "Title": "String",
+                                            "ArtistId": "Number",
+                                            "Artist": [
+                                                {
+                                                    "_id": "string",
+                                                    "ArtistId": "number",
+                                                    "Name": "string"
+                                                }
+                                            ],
+                                            "Tracks": [
+                                                {
+                                                    "_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "TrackId": {
+                                                        "type": "Number"
+                                                    },
+                                                    "Name": {
+                                                        "type": "String"
+                                                    },
+                                                    "AlbumId": {
+                                                        "type": "Number"
+                                                    },
+                                                    "MediaTypeId": {
+                                                        "type": "Number"
+                                                    },
+                                                    "GenreId": {
+                                                        "type": "Number"
+                                                    },
+                                                    "Composer": {
+                                                        "type": "String"
+                                                    },
+                                                    "Milliseconds": {
+                                                        "type": "Number"
+                                                    },
+                                                    "Bytes": {
+                                                        "type": "Number"
+                                                    },
+                                                    "UnitPrice": {
+                                                        "type": "Number"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Result Array": {
+                                        "value": [
+                                            {
+                                                "_id": "6179b06a3523a72dbad35584",
+                                                "AlbumId": 147,
+                                                "Title": "The Best Of Men At Work",
+                                                "ArtistId": 105,
+                                                "Artist": [
+                                                    {
+                                                        "_id": "6179b08c4cb47fbed9f20566",
+                                                        "ArtistId": 105,
+                                                        "Name": "Men At Work"
+                                                    }
+                                                ],
+                                                "tracks": [
+                                                    {
+                                                        "_id": "6179b1239ab047cdafc609c6",
+                                                        "TrackId": 1793,
+                                                        "Name": "Be Good Johnny",
+                                                        "AlbumId": 147,
+                                                        "MediaTypeId": 1,
+                                                        "GenreId": 1,
+                                                        "Composer": "",
+                                                        "Milliseconds": 216320,
+                                                        "Bytes": 7139814,
+                                                        "UnitPrice": 0.99
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get specific album information",
+                "tags": [
+                    "Albums"
                 ]
             }
         }
