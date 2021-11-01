@@ -10,7 +10,105 @@
         }
     ],
     "paths": {
-        "/students": {
+        "/register": {
+            "post": {
+                "summary": "Register new user",
+                "operationId": "post-register",
+                "responses": {
+                    "200": {
+                        "description": "New User Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Registration schema",
+                                    "type": "object",
+                                    "properties": {
+                                        "username": "string",
+                                        "password": "string"
+                                    },
+                                    "required": [
+                                        "username",
+                                        "password"
+                                    ]
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "value": {
+                                            "status": 201,
+                                            "message": "Registration Successful!! Enjoy ISDB"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Please enter username and password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Register Schema",
+                                    "type": "object",
+                                    "properties": {
+                                        "username": "string",
+                                        "password": "string"
+                                    },
+                                    "required": [
+                                        "username",
+                                        "password"
+                                    ]
+                                },
+                                "examples": {
+                                    "Username exists": {
+                                        "value": {
+                                            "status": 401,
+                                            "message": "This username already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": [
+                                    {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        }
+                                    }
+                                ],
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            },
+                            "examples": {
+                                "Create new student example": {
+                                    "value": {
+                                        "username": "Thomas_Quick",
+                                        "password": "UserPassword132"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Username and password are required and username has unique, passwords are stored as a hash with a salt"
+                },
+                "description": "New User Created",
+                "tags": [
+                    "Authentication"
+                ]
+            }
+        },
+        "/login": {
             "post": {
                 "summary": "Create New Student",
                 "operationId": "post-student",
@@ -118,56 +216,7 @@
                 },
                 "description": "Create a new student",
                 "tags": [
-                    "Student"
-                ]
-            },
-            "get": {
-                "summary": "Get Students",
-                "operationId": "get-students",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "username": {
-                                                "type": "string"
-                                            },
-                                            "class": {
-                                                "type": "string"
-                                            },
-                                            "rollnumber": {
-                                                "type": "number"
-                                            },
-                                            "_id": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "Result Array": {
-                                        "value": [
-                                            {
-                                                "_id": "616fe4ea4t3g8635f03f242a",
-                                                "username": "Rocko",
-                                                "class": "JavaScript",
-                                                "rollnumber": 5
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "Get student details",
-                "tags": [
-                    "Student"
+                    "Authentication"
                 ]
             }
         },
