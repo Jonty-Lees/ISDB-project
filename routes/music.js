@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport')
 
 const { Tracks } = require('../model/tracksSchema')
-const { Genres } = require('../model/genresSchema')
+const { Genres } = require('../model/genresSchema.js')
 const { Albums } = require('../model/albumSchema')
 const { Artists } = require('../model/artistSchema');
 
@@ -37,6 +37,14 @@ router.get('/tracks/:id', passport.authenticate("jwt",
                     localField: "GenreId",
                     foreignField: "GenreId",
                     as: "Genre"
+                }
+            },
+            {
+                $lookup: {
+                    from: "media_types",
+                    localField: "MediaTypeId",
+                    foreignField: "MediaTypeId",
+                    as: "MediaType"
                 }
             }
         ])
@@ -78,7 +86,29 @@ router.get('/genres',
 router.get('/albums/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const album = await Albums.findOne({ _id: req.params.id })
+        const album = await Albums.aggregate([
+            {
+                $match: {
+                    "AlbumId": parseInt(req.params.id)
+                }
+            },
+            {
+                $lookup: {
+                    from: "artists",
+                    localField: "ArtistId",
+                    foreignField: "ArtistId",
+                    as: "Artist"
+                }
+            },
+            {
+                $lookup: {
+                    from: "tracks",
+                    localField: "AlbumId",
+                    foreignField: "AlbumId",
+                    as: "tracks"
+                }
+            }
+        ])
         return res.json(album)
     });
 
@@ -89,7 +119,21 @@ router.get('/albums/:id', passport.authenticate("jwt",
 router.get('/artists/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        const artist = await Artists.find({ _id: req.params.id })
+        const artist = await Artists.aggregate([
+            {
+                $match: {
+                    "ArtistId": parseInt(req.params.id)
+                }
+            },
+            {
+                $lookup: {
+                    from: "albums",
+                    localField: "ArtistId",
+                    foreignField: "ArtistId",
+                    as: "Albums"
+                }
+            }
+        ])
         return res.json(artist)
     }
 )

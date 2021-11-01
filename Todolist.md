@@ -39,6 +39,24 @@ Keep commiting changes to Github
     2. am i able to search multiple collection? I have been trying whether sperating in multiple collections or having it all within one is the best option?
 
 
+The Software is set up..
+
+now to deploy and document!
+
+1. Change Express header
+
+2. Git Repo add to one i have already created
+
+3. Set up Swagger
+
+4. set up through Heroku
+
+5. Re Check code and clean up
+
+6. Create the Github README
+
+
+
 
   
 
