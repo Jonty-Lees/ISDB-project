@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
 const passport = require("passport");
+require('dotenv').config();
 
 
 // import auth middleware
@@ -22,9 +23,13 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocumentation = require('./swagger.json')
 
 
+const mongodb_address = process.env.MONGO_DB;
+
+console.log(mongodb_address)
 
 
-mongoose.connect("mongodb://127.0.0.1/ISDB_db")
+// mongoose.connect("mongodb://127.0.0.1/ISDB_db")
+mongoose.connect(mongodb_address)
 
 const app = express();
 app.use(express.json());
