@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
                     )
                 } else {
                     res.status(401).json({
-                        message: "A User already exists with this username"
+                        message: "This username already exists"
                     });
                 }
             });
