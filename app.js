@@ -6,10 +6,6 @@ var logger = require('morgan');
 const mongoose = require("mongoose");
 const passport = require("passport");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-
 
 // import auth middleware
 require('./middleware/auth');
@@ -18,6 +14,15 @@ require('./middleware/auth');
 // import router(s)
 const authRoute = require('./routes/auth');
 const musicRoute = require('./routes/music');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+// import swagger ui, swagger.json
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocumentation = require('./swagger.json')
+
+
+
 
 mongoose.connect("mongodb://127.0.0.1/ISDB_db")
 
@@ -30,6 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 // utilise router(s)
 app.use("/api", authRoute);
 app.use("/api", musicRoute);
+
+// ask swagger-ui to render / serve documentation (swagger.json) on an endpoint
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocumentation)); 
 
 
 
@@ -47,12 +55,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
