@@ -72,17 +72,6 @@
                   }
                 }
               }
-            },
-            "": {
-              "description": "Response details",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {}
-                  }
-                }
-              }
             }
           },
           "requestBody": {
