@@ -105,7 +105,7 @@ router.get('/albums/:id', passport.authenticate("jwt",
                     from: "Tracks",
                     localField: "AlbumId",
                     foreignField: "AlbumId",
-                    as: "tracks"
+                    as: "Tracks"
                 }
             }
         ])
