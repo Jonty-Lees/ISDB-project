@@ -2,7 +2,8 @@
     "openapi": "3.0.0",
     "info": {
         "title": "ISDB Project",
-        "version": "1.0"
+        "version": "1.0",
+        "description": "Following the success of “IMDB”, the well known Internet Movie Database, we’re launching “ISDB” - the Internet Song Database. In this new world of interconnected software, our plan is to sell an API on this and leave it to customers to build the various front ends needed to use the database. This swagger gives the documentation of how to use API, detailing how to authenticate users, get tracks, albums, artists and genres and add tracks that we have missed"
     },
     "servers": [
         {
