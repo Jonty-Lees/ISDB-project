@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "ISDB",
+        "title": "ISDB Project",
         "version": "1.0"
     },
     "servers": [
@@ -93,8 +93,8 @@
                             "examples": {
                                 "Create new student example": {
                                     "value": {
-                                        "username": "Thomas_Quick",
-                                        "password": "UserPassword132"
+                                        "username": "HomerSimpson",
+                                        "password": "DOH!123"
                                     }
                                 }
                             }
@@ -110,67 +110,59 @@
         },
         "/login": {
             "post": {
-                "summary": "Create New Student",
-                "operationId": "post-student",
+                "summary": "Login User",
+                "operationId": "post-login",
                 "responses": {
                     "200": {
-                        "description": "Student Created",
+                        "description": "login successful",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "description": "",
+                                    "description": "login Schema",
                                     "type": "object",
                                     "properties": {
                                         "status": {
-                                            "type": "number"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "minLength": 1
+                                            "username": "string",
+                                            "password": "string"
                                         }
                                     },
                                     "required": [
-                                        "status",
-                                        "message"
+                                        "username",
+                                        "password"
                                     ]
                                 },
                                 "examples": {
                                     "Success": {
                                         "value": {
                                             "status": 200,
-                                            "message": "Student created"
+                                            "message": "Login Successful!!"
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    "400": {
-                        "description": "Missing Required Information",
+                    "401": {
+                        "description": "Invalid password",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "description": "",
                                     "type": "object",
                                     "properties": {
-                                        "status": {
-                                            "type": "number"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "minLength": 1
-                                        }
+                                        "username": "string",
+                                        "password": "string"
                                     },
                                     "required": [
-                                        "status",
-                                        "message"
+                                        "username",
+                                        "password"
                                     ]
                                 },
                                 "examples": {
-                                    "Username exist": {
+                                    "Username not recognized": {
                                         "value": {
-                                            "status": 400,
-                                            "message": "Username already exists"
+                                            "status": 401,
+                                            "message": "User not registered"
                                         }
                                     }
                                 }
@@ -183,38 +175,34 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "username": {
-                                        "type": "string"
-                                    },
-                                    "class": {
-                                        "type": "string"
-                                    },
-                                    "rollnumber": {
-                                        "type": "number",
-                                        "format": "date"
+                                "properties": [
+                                    {
+                                        "username": {
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        }
                                     }
-                                },
+                                ],
                                 "required": [
                                     "username",
-                                    "class",
-                                    "rollnumber"
+                                    "password"
                                 ]
                             },
                             "examples": {
                                 "Create new student example": {
                                     "value": {
-                                        "username": "Rocko",
-                                        "class": "JavaScript",
-                                        "rollnumber": 5
+                                        "username": "HomerSimpson",
+                                        "password": "DOH!123"
                                     }
                                 }
                             }
                         }
                     },
-                    "description": "Details of the request body"
+                    "description": "Username and password are required and username has unique, passwords are stored as a hash with a salt"
                 },
-                "description": "Create a new student",
+                "description": "Login User",
                 "tags": [
                     "Authentication"
                 ]
