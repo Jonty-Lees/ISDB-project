@@ -478,7 +478,7 @@
         },
         "/albums/:id": {
             "get": {
-                "summary": "Get specific album information, including artist and tracks",
+                "summary": "Get specific album information",
                 "operationId": "get-albums",
                 "responses": {
                     "200": {
@@ -578,6 +578,65 @@
                 "description": "Get specific album information",
                 "tags": [
                     "Albums"
+                ]
+            }
+        },
+        "/artists/:id": {
+            "get": {
+                "summary": "Get information about specific artists",
+                "operationId": "get-artists",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "_id": "string",
+                                                "ArtistId": "number",
+                                                "Name": "string",
+                                                "Albums": [
+                                                    {
+                                                        "_id": "string",
+                                                        "AlbumId": "number",
+                                                        "Title": "string",
+                                                        "AristId": "number"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                "examples": {
+                                    "Result Array": {
+                                        "value": [
+                                            {
+                                                "_id": "6179b08c4cb47fbed9f20522",
+                                                "ArtistId": 36,
+                                                "Name": "O Rappa",
+                                                "Albums": [
+                                                    {
+                                                        "_id": "6179b06a3523a72dbad355fb",
+                                                        "AlbumId": 259,
+                                                        "Title": "Radio Brasil (O Som da Jovem Vanguarda) - Seleccao de Henrique Amaro",
+                                                        "ArtistId": 36
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get information on a specific artist along with all albums assosiated with them",
+                "tags": [
+                    "Artists"
                 ]
             }
         }
