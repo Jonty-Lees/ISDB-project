@@ -1,0 +1,173 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "universityProject",
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000/api"
+      }
+    ],
+    "paths": {
+      "/students": {
+        "post": {
+          "summary": "Create New Student",
+          "operationId": "post-student",
+          "responses": {
+            "200": {
+              "description": "Student Created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "description": "",
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "number"
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["status", "message"]
+                  },
+                  "examples": {
+                    "Success": {
+                      "value": {
+                        "status": 200,
+                        "message": "Student created"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Missing Required Information",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "description": "",
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "number"
+                      },
+                      "message": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["status", "message"]
+                  },
+                  "examples": {
+                    "Username exist": {
+                      "value": {
+                        "status": 400,
+                        "message": "Username already exists"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "": {
+              "description": "Response details",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          },
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "class": {
+                      "type": "string"
+                    },
+                    "rollnumber": {
+                      "type": "number",
+                      "format": "date"
+                    }
+                  },
+                  "required": ["username", "class", "rollnumber"]
+                },
+                "examples": {
+                  "Create new student example": {
+                    "value": {
+                      "username": "Rocko",
+                      "class": "JavaScript",
+                      "rollnumber": 5
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Details of the request body"
+          },
+          "description": "Create a new student",
+          "tags": ["Student"]
+        },
+        "get": {
+          "summary": "Get Students",
+          "operationId": "get-students",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "class": {
+                          "type": "string"
+                        },
+                        "rollnumber": {
+                          "type": "number"
+                        },
+                        "_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "Result Array": {
+                      "value": [
+                        {
+                          "_id": "616fe4ea4t3g8635f03f242a",
+                          "username": "Rocko",
+                          "class": "JavaScript",
+                          "rollnumber": 5
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Get student details",
+          "tags": ["Student"]
+        }
+      }
+    }
+  }
+  
