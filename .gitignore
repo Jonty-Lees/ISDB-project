@@ -1,0 +1,4 @@
+node_modules/*
+Todolist.md
+.env
+.DS_Store
