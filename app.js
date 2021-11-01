@@ -25,7 +25,7 @@ const swaggerDocumentation = require('./swagger.json')
 
 const mongodb_address = process.env.MONGO_DB;
 
-console.log(mongodb_address)
+
 
 
 // mongoose.connect("mongodb://127.0.0.1/ISDB_db")
