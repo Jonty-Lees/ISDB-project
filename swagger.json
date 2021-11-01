@@ -1,380 +1,437 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "ISDB",
-      "version": "1.0"
+        "title": "ISDB",
+        "version": "1.0"
     },
     "servers": [
-      {
-        "url": "http://localhost:3000/api"
-      }
+        {
+            "url": "http://localhost:3000/api"
+        }
     ],
     "paths": {
-      "/students": {
-        "post": {
-          "summary": "Create New Student",
-          "operationId": "post-student",
-          "responses": {
-            "200": {
-              "description": "Student Created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "description": "",
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "number"
-                      },
-                      "message": {
-                        "type": "string",
-                        "minLength": 1
-                      }
+        "/students": {
+            "post": {
+                "summary": "Create New Student",
+                "operationId": "post-student",
+                "responses": {
+                    "200": {
+                        "description": "Student Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "",
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "minLength": 1
+                                        }
+                                    },
+                                    "required": [
+                                        "status",
+                                        "message"
+                                    ]
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "Student created"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
-                    "required": ["status", "message"]
-                  },
-                  "examples": {
-                    "Success": {
-                      "value": {
-                        "status": 200,
-                        "message": "Student created"
-                      }
+                    "400": {
+                        "description": "Missing Required Information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "",
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "minLength": 1
+                                        }
+                                    },
+                                    "required": [
+                                        "status",
+                                        "message"
+                                    ]
+                                },
+                                "examples": {
+                                    "Username exist": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Username already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Missing Required Information",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "description": "",
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "number"
-                      },
-                      "message": {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    },
-                    "required": ["status", "message"]
-                  },
-                  "examples": {
-                    "Username exist": {
-                      "value": {
-                        "status": 400,
-                        "message": "Username already exists"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "username": {
-                      "type": "string"
-                    },
-                    "class": {
-                      "type": "string"
-                    },
-                    "rollnumber": {
-                      "type": "number",
-                      "format": "date"
-                    }
-                  },
-                  "required": ["username", "class", "rollnumber"]
                 },
-                "examples": {
-                  "Create new student example": {
-                    "value": {
-                      "username": "Rocko",
-                      "class": "JavaScript",
-                      "rollnumber": 5
-                    }
-                  }
-                }
-              }
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "class": {
+                                        "type": "string"
+                                    },
+                                    "rollnumber": {
+                                        "type": "number",
+                                        "format": "date"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "class",
+                                    "rollnumber"
+                                ]
+                            },
+                            "examples": {
+                                "Create new student example": {
+                                    "value": {
+                                        "username": "Rocko",
+                                        "class": "JavaScript",
+                                        "rollnumber": 5
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Details of the request body"
+                },
+                "description": "Create a new student",
+                "tags": [
+                    "Student"
+                ]
             },
-            "description": "Details of the request body"
-          },
-          "description": "Create a new student",
-          "tags": ["Student"]
+            "get": {
+                "summary": "Get Students",
+                "operationId": "get-students",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "username": {
+                                                "type": "string"
+                                            },
+                                            "class": {
+                                                "type": "string"
+                                            },
+                                            "rollnumber": {
+                                                "type": "number"
+                                            },
+                                            "_id": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Result Array": {
+                                        "value": [
+                                            {
+                                                "_id": "616fe4ea4t3g8635f03f242a",
+                                                "username": "Rocko",
+                                                "class": "JavaScript",
+                                                "rollnumber": 5
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Get student details",
+                "tags": [
+                    "Student"
+                ]
+            }
         },
-        "get": {
-          "summary": "Get Students",
-          "operationId": "get-students",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "username": {
-                          "type": "string"
-                        },
-                        "class": {
-                          "type": "string"
-                        },
-                        "rollnumber": {
-                          "type": "number"
-                        },
-                        "_id": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "examples": {
-                    "Result Array": {
-                      "value": [
-                        {
-                          "_id": "616fe4ea4t3g8635f03f242a",
-                          "username": "Rocko",
-                          "class": "JavaScript",
-                          "rollnumber": 5
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": "Get student details",
-          "tags": ["Student"]
-        }
-      },
-      "/tracks/:id": {
-        "get": {
-          "summary": "Get track information",
-          "operationId": "get-tracks",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string"
-                        },
-                        "TrackId": {
-                          "type": "Number"
-                        },
-                        "Name": {
-                          "type": "String"
-                        },
-                        "AlbumId": {
-                          "type": "Number"
-                        },
-                        "MediaTypeId": {
-                          "type": "Number"
-                        },
-                        "GenreId": {
-                          "type": "Number"
-                        },
-                        "Composer": {
-                          "type": "String"
-                        },
-                        "Milliseconds": {
-                          "type": "Number"
-                        },
-                        "Bytes": {
-                          "type": "Number"
-                        },
-                        "UnitPrice": {
-                          "type": "Number"
-                        },
-                        "Album": [ 
-                            {
-                            "_id": "String",
-                            "AlbumId": "Number",
-                            "Title": "String",
-                            "ArtistId": "Number"
-                            }
-                        ]
-                        },
-                        "Genre": [ 
-                            {
-                            "_id": "String",
-                            "GenreId": "Number",
-                            "Name": "String"
-                            }
-                        ],
-                        "MediaType": [ 
-                            {
-                            "_id": "String",
-                            "MediaTypeId": "Number",
-                            "Name": "String"
-                            }
-                        ]
-                        
-                    }
-                  },
-                  "examples": {
-                    "Result Array": {
-                      "value": [
-                        {
-                            "_id": "6179b1239ab047cdafc602d1",
-                            "TrackId": 14,
-                            "Name": "Spellbound",
-                            "AlbumId": 1,
-                            "MediaTypeId": 1,
-                            "GenreId": 1,
-                            "Composer": "Angus Young, Malcolm Young, Brian Johnson",
-                            "Milliseconds": 270863,
-                            "Bytes": 8817038,
-                            "UnitPrice": 0.99,
-                            "Album": [
-                                {
-                                    "_id": "6179b06a3523a72dbad354f2",
-                                    "AlbumId": 1,
-                                    "Title": "For Those About To Rock We Salute You",
-                                    "ArtistId": 1
+        "/tracks": {
+            "post": {
+                "summary": "Create new Track",
+                "operationId": "post-track",
+                "responses": {
+                    "200": {
+                        "description": "Track Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Track Schema",
+                                    "type": "object",
+                                    "properties": {
+                                        "Name": "string",
+                                        "AlbumId": {
+                                            "type": "number",
+                                            "min": 1,
+                                            "max": 347
+                                        },
+                                        "GenreId": {
+                                            "type": "number",
+                                            "min": 1,
+                                            "max": 25
+                                        },
+                                        "Composer": "string",
+                                        "Milliseconds": "number",
+                                        "Bytes": "number",
+                                        "UnitPrice": "number"
+                                    },
+                                    "required": [
+                                        "Name",
+                                        "AlbumId",
+                                        "GenreId",
+                                        "Composer",
+                                        "Milliseconds",
+                                        "Bytes",
+                                        "UnitPrice"
+                                    ]
+                                },
+                                "examples": {
+                                    "Success": {
+                                        "value": {
+                                            "status": 200,
+                                            "message": "The Track <name> has been successfully added"
+                                        }
+                                    }
                                 }
-                            ],
-                            "Genre": [
-                                {
-                                    "_id": "6179b0f3611cb8cd2d857d75",
-                                    "GenreId": 1,
-                                    "Name": "Rock"
-                                }
-                            ],
-                            "MediaType": [
-                                {
-                                    "_id": "6179b113b9096abf0b7db3c3",
-                                    "MediaTypeId": 1,
-                                    "Name": "MPEG audio file"
-                                }
-                            ]
+                            }
                         }
-                    ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": "Get specific track details",
-          "tags": ["Tracks"]
-        }
-      },
-      "/tracks": {
-        "post": {
-          "summary": "Create new Track",
-          "operationId": "post-track",
-          "responses": {
-            "200": {
-              "description": "Track Created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "description": "",
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "number"
-                      },
-                      "message": {
-                        "type": "string",
-                        "minLength": 1
-                      }
                     },
-                    "required": ["status", "message"]
-                  },
-                  "examples": {
-                    "Success": {
-                      "value": {
-                        "status": 200,
-                        "message": "Student created"
-                      }
+                    "400": {
+                        "description": "Tracks validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Track Schema",
+                                    "type": "object",
+                                    "properties": {
+                                        "Name": "string",
+                                        "AlbumId": {
+                                            "type": "number",
+                                            "min": 1,
+                                            "max": 347
+                                        },
+                                        "GenreId": {
+                                            "type": "number",
+                                            "min": 1,
+                                            "max": 25
+                                        },
+                                        "Composer": "string",
+                                        "Milliseconds": "number",
+                                        "Bytes": "number",
+                                        "UnitPrice": "number"
+                                    },
+                                    "required": [
+                                        "Name",
+                                        "AlbumId",
+                                        "GenreId",
+                                        "Composer",
+                                        "Milliseconds",
+                                        "Bytes",
+                                        "UnitPrice"
+                                    ]
+                                },
+                                "examples": {
+                                    "GenreId not recognised": {
+                                        "value": {
+                                            "status": 400,
+                                            "message": "Tracks validation failed: GenreId: Please enter a pre-defined genre between 1-25"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Missing Required Information",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "description": "",
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "number"
-                      },
-                      "message": {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    },
-                    "required": ["status", "message"]
-                  },
-                  "examples": {
-                    "Username exist": {
-                      "value": {
-                        "status": 400,
-                        "message": "Username already exists"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "username": {
-                      "type": "string"
-                    },
-                    "class": {
-                      "type": "string"
-                    },
-                    "rollnumber": {
-                      "type": "number",
-                      "format": "date"
-                    }
-                  },
-                  "required": ["username", "class", "rollnumber"]
                 },
-                "examples": {
-                  "Create new student example": {
-                    "value": {
-                      "username": "Rocko",
-                      "class": "JavaScript",
-                      "rollnumber": 5
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": [{
+                                    "Name": "string",
+                                    "AlbumId": "number",
+                                    "GenreId": "number",
+                                    "Composer": "string",
+                                    "Milliseconds": "number",
+                                    "Bytes": "number",
+                                    "UnitPrice": "number"
+                                }],
+                                "required": [
+                                    "Name",
+                                    "AlbumId",
+                                    "GenreId",
+                                    "Composer",
+                                    "Milliseconds",
+                                    "Bytes",
+                                    "UnitPrice"
+                                ]
+                            },
+                            "examples": {
+                                "Create new student example": {
+                                    "value": {
+                                            "Name" : "You Know My Name",
+                                            "AlbumId" : "110",
+                                            "GenreId" : "14",
+                                              "Composer" : "K. Petterson",
+                                            "Milliseconds" : "120234e64",
+                                            "Bytes" : "12563463423",
+                                            "UnitPrice" : "0.99"                                          
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Details of the request body"
+                },
+                "description": "Create a new track",
+                "tags": [
+                    "Tracks"
+                ]
+            }
+        },
+        "/tracks/:id": {
+            "get": {
+                "summary": "Get track information",
+                "operationId": "get-tracks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "_id": {
+                                                "type": "string"
+                                            },
+                                            "TrackId": {
+                                                "type": "Number"
+                                            },
+                                            "Name": {
+                                                "type": "String"
+                                            },
+                                            "AlbumId": {
+                                                "type": "Number"
+                                            },
+                                            "MediaTypeId": {
+                                                "type": "Number"
+                                            },
+                                            "GenreId": {
+                                                "type": "Number"
+                                            },
+                                            "Composer": {
+                                                "type": "String"
+                                            },
+                                            "Milliseconds": {
+                                                "type": "Number"
+                                            },
+                                            "Bytes": {
+                                                "type": "Number"
+                                            },
+                                            "UnitPrice": {
+                                                "type": "Number"
+                                            },
+                                            "Album": [
+                                                {
+                                                    "_id": "String",
+                                                    "AlbumId": "Number",
+                                                    "Title": "String",
+                                                    "ArtistId": "Number"
+                                                }
+                                            ]
+                                        },
+                                        "Genre": [
+                                            {
+                                                "_id": "String",
+                                                "GenreId": "Number",
+                                                "Name": "String"
+                                            }
+                                        ],
+                                        "MediaType": [
+                                            {
+                                                "_id": "String",
+                                                "MediaTypeId": "Number",
+                                                "Name": "String"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "examples": {
+                                    "Result Array": {
+                                        "value": [
+                                            {
+                                                "_id": "6179b1239ab047cdafc602d1",
+                                                "TrackId": 14,
+                                                "Name": "Spellbound",
+                                                "AlbumId": 1,
+                                                "MediaTypeId": 1,
+                                                "GenreId": 1,
+                                                "Composer": "Angus Young, Malcolm Young, Brian Johnson",
+                                                "Milliseconds": 270863,
+                                                "Bytes": 8817038,
+                                                "UnitPrice": 0.99,
+                                                "Album": [
+                                                    {
+                                                        "_id": "6179b06a3523a72dbad354f2",
+                                                        "AlbumId": 1,
+                                                        "Title": "For Those About To Rock We Salute You",
+                                                        "ArtistId": 1
+                                                    }
+                                                ],
+                                                "Genre": [
+                                                    {
+                                                        "_id": "6179b0f3611cb8cd2d857d75",
+                                                        "GenreId": 1,
+                                                        "Name": "Rock"
+                                                    }
+                                                ],
+                                                "MediaType": [
+                                                    {
+                                                        "_id": "6179b113b9096abf0b7db3c3",
+                                                        "MediaTypeId": 1,
+                                                        "Name": "MPEG audio file"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
-                }
-              }
-            },
-            "description": "Details of the request body"
-          },
-          "description": "Create a new student",
-          "tags": ["Student"]
+                },
+                "description": "Get specific track details",
+                "tags": [
+                    "Tracks"
+                ]
+            }
         }
-      }
     }
-  }
-  
+}
