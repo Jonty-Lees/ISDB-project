@@ -19,7 +19,7 @@ const trackSchema = new mongoose.Schema({
         min: [1, "Please enter a pre-defined genre between 1-25"],
         max: [25, "Please enter a pre-defined genre between 1-25"]
     },
-    Composer:  {
+    Composer: {
         type: String,
         required: true
     },
