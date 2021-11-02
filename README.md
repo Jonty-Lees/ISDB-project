@@ -30,8 +30,11 @@ tracks, albums, artists and genres, but also allowed for a user to add a track t
 I created user stories to help shape my design, gave me achivable goals to complete and help keep the project on track.
 These are prioritised with what I would look at first and then would work out how/if I would try to comlete it in this iteration.
 
-![UserStories]()
+![UserStories](https://user-images.githubusercontent.com/86611109/139845123-f744626f-db19-41af-b833-6e84c4c46876.png)
 
+for a more detailed look, please visit:
+
+https://miro.com/app/board/o9J_loFrc9U=/?invite_link_id=846433399948
 
 ---
 
