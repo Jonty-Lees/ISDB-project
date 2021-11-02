@@ -1,8 +1,6 @@
 # ISDB Project
 
-This app is hosted deployed through localHost, Heroku, MongoDB:
-
-localhost: localhost:3000/
+This app is hosted deployed through Heroku & MongoDB:
 
 Heroku: https://isdb-app-project.herokuapp.com/
 
