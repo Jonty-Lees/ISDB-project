@@ -16,7 +16,7 @@ require('./middleware/auth');
 const authRoute = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const musicRoute = require('./routes/music');
-const usersRouter = require('./routes/users');
+
 
 // import swagger ui, swagger.json
 const swaggerUi = require('swagger-ui-express');
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", authRoute);
 app.use("/api", musicRoute);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 
 // ask swagger-ui to render / serve documentation (swagger.json) on an endpoint
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocumentation)); 
