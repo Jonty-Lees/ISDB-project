@@ -4,10 +4,6 @@ This app is hosted deployed through Heroku & MongoDB:
 
 Heroku: https://isdb-app-project.herokuapp.com/
 
-You can view documentation (via swagger) here:
-
-https://isdb-app-project.herokuapp.com/documentation/
-
 
 In this project for ISDB, the client wanted a simple backend app that allow users to register, login and search through their database for 
 tracks, albums, artists and genres, but also allowed for a user to add a track to one of our registerd albums.
@@ -17,9 +13,23 @@ tracks, albums, artists and genres, but also allowed for a user to add a track t
 ## Technologies
 
 1. Node.js
-2. express
-3. mongoose
+2. Express
+3. Mongoose
 4. MongoDB
+5. Heroku
+6. GitHub
+7. Swagger
+
+---
+
+## Installation Instructions
+
+To use this app, please look over the documentation here:
+https://isdb-app-project.herokuapp.com/documentation/
+
+Remember to 'npm install' once git cloned. 
+
+To view the app, please use an API Platform (like Postman) and follow instructions from the documentation
 
 ---
 
