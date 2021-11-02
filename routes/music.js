@@ -13,7 +13,6 @@ const { Tracks } = require('../model/tracksSchema')
 router.get('/tracks/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
-        console.log(req.params.id)
         const track = await Tracks.aggregate([
             {
                 $match: {
