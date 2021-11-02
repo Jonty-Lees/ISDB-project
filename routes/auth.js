@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken')
 
 // import User
 
-const {User} = require('../model/userSchema.js')
+const { User } = require('../model/userSchema.js')
 
 // add the jwtOptions with secret or key password
 
-const jwtOptions = { secretOrKey: "pa657HI!sna87"};
+const jwtOptions = { secretOrKey: "pa657HI!sna87" };
 
 
 // /register - this is to add a new user

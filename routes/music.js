@@ -1,18 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport')
+const router = express.Router();
 
-const { Tracks } = require('../model/tracksSchema')
-const { Genres } = require('../model/genresSchema.js')
 const { Albums } = require('../model/albumSchema')
 const { Artists } = require('../model/artistSchema');
+const { Genres } = require('../model/genresSchema.js')
+const { Tracks } = require('../model/tracksSchema')
 
 
 
 //  /tracks/:id   GET  all information about specific track, genre and album info
-
-
-
 router.get('/tracks/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
@@ -52,13 +49,7 @@ router.get('/tracks/:id', passport.authenticate("jwt",
     });
 
 
-// Working!
-//    db.tracks.aggregate([ {$match: {TrackId: 4}}, {   $lookup: {from:"albums", localField:"AlbumId", foreignField:"AlbumId", as: "Album"} }, { $lookup: {from:"genres", localField: "GenreId", foreignField: "GenreId", as: "Genre" }} ] )
-
-
-
 //  /genres   GET   all genres(as an array)
-
 router.get('/genres',
     passport.authenticate("jwt",
         { session: false }),
@@ -79,10 +70,7 @@ router.get('/genres',
     })
 
 
-
-
 // albums/:id   GET   All info about the specific album, including artist info
-
 router.get('/albums/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
@@ -113,9 +101,7 @@ router.get('/albums/:id', passport.authenticate("jwt",
     });
 
 
-
 // /artists/:id    GET    All info about the specific artist
-
 router.get('/artists/:id', passport.authenticate("jwt",
     { session: false }),
     async function (req, res) {
@@ -139,10 +125,7 @@ router.get('/artists/:id', passport.authenticate("jwt",
 )
 
 
-//  /tracks    POST     yorsu can add Name, album id, Genre id, composer, furation, size in byte and prices.  
-// Json message with created record or proper error message. Album and Genre have to exist already
-
-
+//  /tracks    POST     you can add info in track schema, note: AlbumId and Genre must already exist.
 router.post('/tracks', async function (req, res) {
     const track = new Tracks({
         Name: req.body.Name,
@@ -163,8 +146,6 @@ router.post('/tracks', async function (req, res) {
         res.status(400).json({ message: err.message })
     }
 });
-
-
 
 
 module.exports = router;
