@@ -43,60 +43,82 @@ take a more pragmatic apporoach, creating a list and completing each step withou
 I started off by creating the various files, making sure my project was connected to github from the beinging and I was regulary 
 commiting to my repo. 
 
-I quickly moved on to creating and enabling authentication through 
+I quickly moved on to creating and enabling authentication through passport and jwt. 
+Creating a simple user Schema that allowed for a username and password, a jwt stratergy that took a payload and POST routes
+for both the register and login routes. Making sure register added the username to our Mongo DB but not the password, as well as retrieving and sending
+the user a key once logged in or through error status and message: see below
 
 ```
-     {[...Array(5)].map((star, i) => {
+     if (user) {
+                            // pass jwt token
+                            const payload = { id: user.id };
+                            const token = jwt.sign(payload, jwtOptions.secretOrKey);
+
+                            res.status(200).json({
+                                message: "Login Successful!!",
+                                token: token
+                            });
+                        } else {
+                            res.status(401).json({
+                                message: "Invalid password"
+                            });
 ```
 
-to create multiples of a components.
-I really enjoyed being slowly figuring out how to use html commands within React, the way to make the stars change colour when you mount goes over a star was a good example of this
+I found this fairly challenging as there are lots of moving parts, but this process, along with more practise in the following months, will help solidify the theory and practise of setting up authentication (without the use google and notes!)
+
+Once authentication was done, it was just a task of making the routes work, getting all the corrent information from the aggregate pipelines. 
+
+The most challengin one was the /tracks/:id as I needed to figure out how to retireve data from multiple collections by using data store in the document I was searching for. This led me on to the $match and $lookup aggregation tool, once managing how to use it, trying to convert from mongosh to node was a challenge. I found that $match was not taking in my req.params.id. We eventurally figured out it was looking an integer but node was changing it to a string, So i was able to stop that with the parseInt, see below:
 
 ```
- <FaStar
-                className="star"
-                size={15}
-                color={
-                  ratingValue <= (hover || watchLater) ? "#079ea3" : "#8a8989"
+router.get('/tracks/:id', passport.authenticate("jwt",
+    { session: false }),
+    async function (req, res) {
+        const track = await Tracks.aggregate([
+            {
+                $match: {
+                    "TrackId": parseInt(req.params.id)
                 }
-                onMouseEnter={() => setHover(ratingValue)}
-                onMouseLeave={() => setHover(null)}
-              />
+            },
+            {
+                $lookup: {
+                    from: "albums",
+                    localField: "AlbumId",
+                    foreignField: "AlbumId",
+                    as: "Album"
 ```
 
-understanding how to use the react icons dependenceis and have access to icons was fun!
 
-I enjoyed using the onMouseEnter/Leave to change the hover state & prioritising the hover over watchLater.
+Much of the challenge comes with doing it for the first time, once I understood how certain bits worked, it was very easy to replicate
 
-I have been really struggling with the watched checkbox and the Delete Watched function. I had set it up with my previous design in a way that when you clicked 'watched', the check box is checked and the state props go from 'watched: false' to 'watched: true' and can toggle back and forth. Then the Delete Watched function .map through the props and returned those that were 'false', see below
+
+Finally, when a user POST's a new track, it needs to be connected to a pre-existing album and a pre-existing genre. I thought through how I wanted to do this and decided to have some fun and try Schema validation. The brief was to make a quick working database, considering there was no need to add albums or genres, I wanted to go down this route instead of if/ if else statments within the /tracks route. I found it really fun working out what a Schema can do and how it validates, see below:
+
 
 ```
-function deleteWatchedMovies(id) {
-    setFavMovie((previousMovies) => {
-      return previousMovies.filter((favMovieItem, index) => {
-        if (favMovieItem.watched === false) return index !== id;
-      });
-    });
-  }
+const trackSchema = new mongoose.Schema({
+    Name: {
+        type: String,
+        required: true
+    },
+    AlbumId: {
+        type: Number,
+        required: true,
+        min: [1, "Only tracks that belong to pre-existing albums can be added"],
+        max: [347, "Only tracks that belong to pre-existing albums can be added"]
+    },
+    TrackId: Number,
 ```
-
-As I said, this worked when one row. when I introduced the second row,'Your Watch Later List', this no longer toggled **unless** I refreshed the page, then it would work as expected. I have, to the point of writing this, beem unable to figure out why.
-I have poured in hours of looking at documentation, other examples and previous lectures and cannot figure out how to fix the bug.
 
 ---
 
-## Future Iterations and Unsolved Problems
+## Future Iterations
 
 For the Future Here are somethings I would like to add and figure out
 
 ---
 
-- Full button functionality
-  As I changed the design faily late in the day, it meant the otion for a full reshuffle felt more overwhelming and not doable in the time frame. having every button work like it is meant to is a must!
+- If the client decided they wanted to add more albums and genres, it would only make sense to create an if statment to allow for that without having to revist the code. It was a good learning experience but for future iterations its worth changing that bit of code
 
-- using the searchbar to call and external API like OMDB API to populate the list and give a wider array of movies to add to the watch later list
 
-- Edit Order function
-  I would like to add the option to edit the order of your watch later list. If I hadnt have had such a struggle, It was going to be a feature i wanted to implement but unfortunatly had to display: none it untill I can have time to implement it.
 
-  - I would like to add a proper login feature
